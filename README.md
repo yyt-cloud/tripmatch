@@ -14,6 +14,8 @@
 - 目的地投票和成团结果
 - “我的”活动分类记录
 - 跨设备邀请、回传与组队结果发布（Supabase）
+- 每人唯一用户 ID、邮箱验证码登录与登录态恢复
+- 同一用户在同一活动中只保留一条参与记录
 - 响应式移动端布局
 
 ## 本地运行
@@ -47,13 +49,16 @@ https://<你的用户名>.github.io/tripmatch/
 1. 在 Supabase 新建项目。
 2. 打开 SQL Editor，执行 `supabase.sql`。
 3. 在 `config.js` 填入项目 URL 和 anon public key。
-4. 提交并推送到 GitHub，原 Pages 域名会自动更新。
+4. 在 `Authentication > Providers` 开启 Email，并使用邮箱验证码模板。
+5. 提交并推送到 GitHub，原 Pages 域名会自动更新。
 
 `config.js` 中的 anon key 是 Supabase 设计为可公开使用的浏览器密钥；数据库表已开启 RLS，网页只通过限定的 RPC 方法访问数据。发起人管理令牌和参与人令牌保存在各自设备中，不进入邀请链接。
 
 ## 数据说明
 
 配置 Supabase 后，活动、参与偏好和已发布分组会跨设备同步；浏览器 `localStorage` 只保存当前设备的身份令牌和离线缓存。
+
+登录后的数据归属规则：活动通过 `owner_user_id` 绑定发起人，参与记录通过 `user_id` 绑定参与人。刷新或重新打开会恢复登录态并重新读取账号数据；退出登录不会删除数据库记录。
 
 未配置 Supabase 时会自动进入本地演示模式：
 
