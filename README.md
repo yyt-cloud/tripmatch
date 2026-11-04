@@ -60,7 +60,12 @@ https://<你的用户名>.github.io/tripmatch/
 2. 打开 SQL Editor，执行 `supabase.sql`。
 3. 在 `config.js` 填入项目 URL 和 anon public key。
 4. 在 `Authentication > Providers` 开启 Email，并使用邮箱验证码模板。
-5. 提交并推送到 GitHub，原 Pages 域名会自动更新。
+5. 在 `Authentication > URL Configuration` 中把 Site URL 设为正式网页地址，并把该地址加入 Redirect URLs。
+6. 提交并推送到 GitHub，原 Pages 域名会自动更新。
+
+建议在一个全新的 Supabase 项目中执行脚本。执行完成后，SQL Editor 中应能看到 `create_trip`、`submit_preference`、`get_user_dashboard`、`publish_groups` 和 `cast_vote` 等 RPC。所有浏览器请求都使用登录会话中的 `auth.uid()` 鉴权；兼容参数 `owner_token` 和 `participant_token` 不参与权限判断。
+
+后端数据分为活动、参与偏好、分组版本、小组成员、投票和操作日志。发布新分组时，旧版本会标记为 `superseded` 而不会被删除；参与人只能读取自己的完整偏好、同组成员昵称和正式发布的小组，不能读取其他账号的完整资料。
 
 `config.js` 中的 anon key 是 Supabase 设计为可公开使用的浏览器密钥；数据库表已开启 RLS，网页只通过限定的 RPC 方法访问数据。发起人管理令牌和参与人令牌保存在各自设备中，不进入邀请链接。
 
