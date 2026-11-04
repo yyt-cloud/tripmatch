@@ -147,6 +147,7 @@ input:focus,select:focus { border-color:var(--brand); box-shadow:0 0 0 3px rgba(
 .badge { background:#ecfdf8; color:#0f766e; border-radius:999px; padding:5px 9px; font-size:12px; font-weight:700; white-space:nowrap; }
 .badge.warning { color:#a16207; background:#fff8e7; }
 .group-meta { color:var(--muted); font-size:13px; margin:10px 0 16px; }
+.group-reason { margin:13px 0 0; color:var(--muted); font-size:11px; line-height:1.6; }
 .members { display:flex; flex-wrap:wrap; gap:8px; }
 .member { display:flex; align-items:center; gap:7px; background:var(--soft); border-radius:999px; padding:5px 10px 5px 5px; font-size:13px; }
 .participant-group-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; box-shadow:0 2px 12px rgba(24,33,47,.04); }
