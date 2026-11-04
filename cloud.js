@@ -44,6 +44,28 @@
 
   window.TripCloud = {
     enabled,
+    passwordAuth: async (phone, password, nickname, register) => {
+      if (!/^1\d{10}$/.test(phone)) throw new Error('请输入11位手机号');
+      const response = await fetch(`${authEndpoint}/${register ? 'signup' : 'token?grant_type=password'}`, {
+        method: 'POST', headers: { apikey: config.supabaseAnonKey, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: '+86' + phone, password, ...(register ? { data: { nickname } } : {}) })
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.msg || result.error_description || result.message || '认证失败');
+      if (!result.access_token) return { needsConfirmation: true };
+      saveSession(result);
+      return { id: result.user.id, phone: result.user.phone, nickname: result.user.user_metadata?.nickname || '同学' + phone.slice(-4) };
+    },
+    verifyPhone: async (phone, token) => {
+      const response = await fetch(`${authEndpoint}/verify`, {
+        method: 'POST', headers: { apikey: config.supabaseAnonKey, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: '+86' + phone, token, type: 'sms' })
+      });
+      const result = await response.json();
+      if (!response.ok || !result.access_token) throw new Error(result.msg || '短信验证码无效或已过期');
+      saveSession(result);
+      return { id: result.user.id, phone: result.user.phone, nickname: result.user.user_metadata?.nickname || '同学' + phone.slice(-4) };
+    },
     requestOtp: async email => {
       const response=await fetch(`${authEndpoint}/otp`,{method:'POST',headers:{apikey:config.supabaseAnonKey,'Content-Type':'application/json'},body:JSON.stringify({email,create_user:true})});
       if(!response.ok)throw new Error('验证码发送失败');

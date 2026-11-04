@@ -226,7 +226,8 @@ begin
           ), '[]'::jsonb),
           'groups', coalesce((
             select jsonb_agg(g.data || jsonb_build_object(
-              'id', g.external_id, 'tripId', t.invite_code, 'status', 'published'
+              'id', g.external_id, 'tripId', t.invite_code, 'status', 'published',
+              'memberIds', (select coalesce(jsonb_agg(m.preference_id), '[]'::jsonb) from public.group_members m where m.group_id=g.id)
             ) order by g.created_at)
             from public.trip_groups g
             join public.grouping_runs r on r.id = g.run_id
@@ -255,7 +256,8 @@ begin
         ), '[]'::jsonb),
         'groups', coalesce((
           select jsonb_agg(g.data || jsonb_build_object(
-            'id', g.external_id, 'tripId', t.invite_code, 'status', 'published'
+            'id', g.external_id, 'tripId', t.invite_code, 'status', 'published',
+            'memberIds', (select coalesce(jsonb_agg(m.preference_id), '[]'::jsonb) from public.group_members m where m.group_id=g.id)
           ))
           from public.group_members mine
           join public.grouping_runs rr on rr.id = mine.run_id and rr.status = 'published'
