@@ -42,6 +42,18 @@ button { cursor:pointer; border:0; }
 .login-card h2 { margin:0 0 7px; font-size:22px; }
 .login-card > p { margin:0 0 22px; color:var(--muted); font-size:12px; line-height:1.7; }
 .login-submit { width:100%; margin-top:20px; }
+.login-layout.account-layout { display:flex; flex-direction:column; gap:24px; min-height:0; max-width:440px; margin:24px auto; align-items:stretch; }
+.account-layout .login-intro { text-align:center; }
+.account-layout .login-intro h1 { font-size:28px; line-height:1.4; margin:8px 0; }
+.account-layout .login-intro p { font-size:13px; margin:0; }
+.account-card { padding:28px; border-radius:16px; box-shadow:0 4px 20px rgba(24,33,47,.04); }
+.account-card .field { margin-top:20px; }
+.account-card input { min-height:52px; font-size:16px; }
+.account-card input:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+.account-actions { margin-top:28px; }
+.account-actions .login-submit { min-height:48px; margin-top:0; font-size:16px; }
+.account-alternative { display:flex; justify-content:center; align-items:center; gap:4px; margin-top:12px; color:var(--muted); font-size:13px; }
+.account-alternative button { min-height:44px; padding:8px; background:transparent; color:var(--brand); font-size:13px; font-weight:600; }
 .account-home { display:grid; gap:18px; }
 .welcome-row { display:flex; justify-content:space-between; align-items:center; padding:8px 2px 18px; }
 .welcome-row h1 { margin:8px 0 7px; font-size:31px; }

@@ -1,5 +1,11 @@
 // Reuse the existing page shell and invite flow; production passwords stay in Auth.
 let accountMode = 'login';
+function switchAccountMode() {
+  const phone=document.querySelector('#account')?.value || '';
+  accountMode=accountMode==='login'?'register':'login';
+  loginPage();
+  document.querySelector('#account').value=phone;
+}
 let pendingPhone = '';
 function phoneVerificationPage() {
   shell('<form class="login-card" onsubmit="confirmPhone(event)"><h2>验证手机号</h2><p>请输入注册手机号收到的短信验证码。</p><input id="phoneCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button class="btn btn-primary">验证并登录</button><button type="button" class="btn btn-quiet" onclick="loginPage()">返回</button></form>');
@@ -11,7 +17,7 @@ async function confirmPhone(e) {
 }
 loginPage = function () {
   const register = accountMode === 'register';
-  shell(`<section class="login-layout"><div class="login-intro"><div class="eyebrow">TripMatch 账号</div><h1>一个账号，保留每一次出发。</h1><p>${cloud.enabled?'登录后恢复你发起和参与的活动。':'本地体验只保存在当前浏览器，请使用测试密码。'}</p></div><form class="login-card" onsubmit="passwordLogin(event)"><div class="actions"><button type="button" class="btn ${register?'btn-secondary':'btn-primary'}" onclick="accountMode='login';loginPage()">登录</button><button type="button" class="btn ${register?'btn-primary':'btn-secondary'}" onclick="accountMode='register';loginPage()">注册</button></div><h2>${register?'创建账号':'欢迎回来'}</h2><p>${sessionStorage.getItem('tripmatch-pending-invite')?'登录后继续填写邀请活动。':'使用自己的账号查看活动。'}</p><div class="field"><label>手机号（中国大陆 +86）</label><input id="account" type="tel" autocomplete="username" inputmode="numeric" pattern="1[0-9]{10}" maxlength="11" required></div>${register?'<div class="field"><label>昵称</label><input id="accountName" maxlength="20" required></div>':''}<div class="field"><label>密码</label><input id="accountPassword" type="password" minlength="8" autocomplete="${register?'new-password':'current-password'}" required></div><button class="btn btn-primary login-submit">${register?'注册并继续':'登录'}</button></form></section>`);
+  shell(`<section class="login-layout account-layout"><div class="login-intro"><div class="eyebrow">TripMatch 账号</div><h1>一个账号，保留每一次出发。</h1><p>${cloud.enabled?'登录后恢复你发起和参与的活动。':'本地体验只保存在当前浏览器，请使用测试密码。'}</p></div><form class="login-card account-card" onsubmit="passwordLogin(event)"><h2>${register?'创建账号':'欢迎回来'}</h2><p>${sessionStorage.getItem('tripmatch-pending-invite')?'登录后继续填写邀请活动。':'使用自己的账号查看活动。'}</p><div class="field"><label for="account">手机号（+86）</label><input id="account" placeholder="请输入手机号" type="tel" autocomplete="username" inputmode="numeric" pattern="1[0-9]{10}" maxlength="11" required></div>${register?'<div class="field"><label for="accountName">昵称</label><input id="accountName" maxlength="20" required></div>':''}<div class="field"><label for="accountPassword">密码</label><input id="accountPassword" placeholder="请输入至少8位密码" type="password" minlength="8" autocomplete="${register?'new-password':'current-password'}" required></div><div class="account-actions"><button class="btn btn-primary login-submit">${register?'注册账号':'登录'}</button><div class="account-alternative"><span>${register?'已有账号？':'还没有账号？'}</span><button type="button" onclick="switchAccountMode()">${register?'返回登录':'注册账号'}</button></div></div></form></section>`);
 };
 async function passwordLogin(e) {
   e.preventDefault(); const button=e.submitter;button.disabled=true;
