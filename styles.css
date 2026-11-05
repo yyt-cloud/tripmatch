@@ -219,6 +219,10 @@ input:focus,select:focus { border-color:var(--brand); box-shadow:0 0 0 3px rgba(
 .fill-progress { height:8px; margin:9px 0 15px; border-radius:999px; overflow:hidden; background:#e9ebf1; }
 .fill-progress i { display:block; height:100%; border-radius:inherit; background:var(--brand); }
 .organizer-main-action { width:100%; margin-top:2px; }
+.group-size-setting { display:flex; align-items:center; gap:8px; margin:14px 0 10px; padding:10px 12px; border-radius:8px; background:var(--soft); color:var(--muted); font-size:11px; }
+.group-size-setting label { color:var(--ink); font-weight:800; }
+.group-size-setting select { min-width:72px; padding:7px 9px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); font-size:12px; }
+.group-size-setting span { margin-left:auto; font-size:10px; }
 .organizer-card-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:14px; border-top:1px solid var(--line); }
 .organizer-card-actions button { min-height:42px; padding:8px 4px; color:var(--muted); background:transparent; font-size:10px; font-weight:700; }
 .organizer-card-actions button + button { border-left:1px solid var(--line); }
