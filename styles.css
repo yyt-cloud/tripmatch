@@ -9,6 +9,11 @@ button { cursor:pointer; border:0; }
 .brand-mark { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; color:white; background:var(--brand); box-shadow:0 8px 16px rgba(79,70,229,.22); }
 .topbar-note { color:var(--muted); font-size:13px; }
 .topbar-status { display:flex; align-items:center; gap:12px; }
+.refresh-button { width:32px; height:32px; display:grid; place-items:center; border:1px solid var(--line); border-radius:50%; color:var(--brand); background:#fff; font-size:18px; line-height:1; cursor:pointer; }
+.refresh-button:hover { background:var(--soft); }
+.refresh-button:disabled { opacity:.65; cursor:wait; }
+.refresh-button.is-refreshing { animation:spin .7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 .user-chip { display:flex; align-items:center; gap:7px; padding:4px 9px 4px 4px; border:1px solid var(--line); border-radius:999px; color:var(--ink); background:#fff; font-size:11px; font-weight:700; }
 .user-chip span { width:25px; height:25px; display:grid; place-items:center; border-radius:50%; color:#fff; background:var(--brand); }
 .sync-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 9px; border-radius:999px; font-size:10px; font-weight:700; white-space:nowrap; }
